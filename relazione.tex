@@ -1,0 +1,59 @@
+\documentclass[a4paper,12pt]{report}
+\usepackage{alltt, fancyvrb, url}
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage[italian]{babel}
+\usepackage[italian]{cleveref}
+\title{Progetto Programmazione di Reti 
+    \\ Chat Client-Server}
+
+\author{Edoardo Scorza \\ Matricola: 010202434}
+\date{24 giugno 2024}   
+\begin{document}
+\maketitle
+\tableofcontents
+\chapter*{Istruzioni d'uso}
+\addcontentsline{toc}{chapter}{Istruzioni d'uso}
+La Chat Client-Server è strutturata in 2 file il Client e il Server.
+é possibile eseguirli attraverso il file.bat passandogli come 
+argomento il numero di client che si vogliono eseguire\\\\
+.\textbackslash run 2\\\\
+Una volta eseguito il comando verranno generati n + 1 terminali,
+con n client e 1 server, l'indirizzo ip e porta del server sono fissati
+e verranno mostrati a seguito dell'avvio.
+\\\\
+Una volta impostato l'ip e la porta del server nel client
+verrà richiesto il nome utente, a quel punto è possibile iniziare la conversazione
+con i client gia connessi.
+
+\chapter*{Server.py}
+\addcontentsline{toc}{chapter}{Server.py}
+Il server per il suo funzionamento fa leva\\
+su due principali componenti:\\\\
+I socket, in questo caso lo stream socket\\
+usato per la comunicazione di tipo TCP, ovvero connection oriented\\
+affidabile e sicuro per la trasmissione di dati.\\\\
+I thread invece permettono al server di gestire piu client\\ in contemporanea
+e di separare le sue funzioni, tra cui troviamo:
+\begin{itemize}
+    \item \texttt{listen\_to\_connections()}: la quale si occupa di ricevere le richieste sulla porta comune e stabilire una nuova porta per la comunicazione fra quel client e il server,
+    \item \texttt{Handle\_client(socket)}:listen\_to\_connection creerà un nuovo tread\\ con la funzione Handle\_client che si occuperà di gestire la comunicazione fra il server e il client specifico
+\end{itemize}
+\chapter*{Client}
+\addcontentsline{toc}{chapter}{Client.py}
+Il client come il server usa i socket per 
+stabilire la comunicazione con il server,\\ a differenza di esso però, non ha bisogno di molti thread,\\
+in quanto la sua comunicazione è di tipo 1-1, solo con il server insomma,\\
+per questo è anche piu semplice:
+\begin{itemize}
+    \item \texttt{ Script principale}:\\
+Il condice fondamentale che inizializza la GUI e la connessione\\
+viene eseguito fuori da una funzione, Non deve essere chiamato ma eseguito come prima cosa,\\in quanto fondamentale per il client
+    \item \texttt{send\_messages()}:\\
+Questa funzione potremmo dire che è la parte operativa\\ del programma,
+si occupa di gestire l'input dell'utente,\\che siano comandi oppure messaggi,
+è situato in un altro thread per non causare rallentamenti alla Gui
+\end{itemize}
+\end{document}
